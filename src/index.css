@@ -1,0 +1,109 @@
+@import 'lenis/dist/lenis.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  html,
+  body {
+    /* clip (not hidden) so position: sticky keeps working */
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-bone font-sans text-ink antialiased;
+  }
+  /* iOS zooms into any field under 16px on focus — keep form fields at 16px on phones. */
+  @media (max-width: 639px) {
+    input:not([data-display]),
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+  ::selection {
+    @apply bg-ember text-bone;
+  }
+  img {
+    @apply select-none;
+  }
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-ember;
+  }
+  /* Custom cursor replaces the native one on fine pointers, but never on form fields. */
+  html.has-custom-cursor,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role='button'] {
+    cursor: none;
+  }
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select {
+    cursor: auto;
+  }
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10;
+  }
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-[0.22em];
+  }
+  .h-display {
+    @apply font-display font-semibold uppercase leading-[0.9] tracking-[-0.03em];
+    overflow-wrap: break-word;
+  }
+  .link-underline {
+    @apply relative inline-block after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-expo hover:after:origin-left hover:after:scale-x-100;
+  }
+  .input {
+    @apply w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-3 text-[15px] placeholder:text-muted/70 focus:border-ink focus:outline-none focus:ring-0 focus-visible:outline-none;
+  }
+  .field-error {
+    @apply mt-1.5 text-xs text-ember-dark;
+  }
+  .chip {
+    @apply inline-flex min-h-[40px] min-w-[44px] items-center justify-center border border-line px-3 py-2 text-xs font-medium uppercase tracking-wider transition-colors duration-300 hover:border-ink;
+  }
+  .chip-active {
+    @apply border-ink bg-ink text-bone;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .text-outline {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
