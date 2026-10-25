@@ -126,6 +126,9 @@ export interface Order {
   shippingAddress: Address;
   shippingMethod: string;
   createdAt: string;
+  /** Courier AWB, once shipped. */
+  trackingNumber?: string;
+  trackingUrl?: string;
 }
 
 export interface CreateOrderRequest {
